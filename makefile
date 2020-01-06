@@ -1,5 +1,5 @@
 CC := gcc
-TARGET := main
+TARGET := AFibCutter
 CFLAGS = -std=c99 -I $(IDIR) -pthread
 
 ODIR := ./obj

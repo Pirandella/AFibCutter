@@ -110,7 +110,7 @@ void getOffset(TIME *timeIntervals, TIME *startTime, uint32_t *dataStartOffset, 
 	hours = (SECONDS_IN_24H - secStart + secEnd) / 3600;
 	minutes = ((SECONDS_IN_24H - secStart + secEnd) - (3600 * hours)) / 60;
 	seconds = ((SECONDS_IN_24H - secStart + secEnd) - (3600 * hours) - (minutes * 60));
-	printf("Start\t\t%02d:%02d:%02d\t%d\n", hours, minutes, seconds, *dataStartOffset);
+	//printf("Start\t\t%02d:%02d:%02d\t%d\n", hours, minutes, seconds, *dataStartOffset);
 //------------------------------------------------------------------------------
 	secEnd = (atoi(timeIntervals->e_hours) * 3600) + (atoi(timeIntervals->e_minutes) * 60) + (atoi(timeIntervals->e_seconds));
 	*dataEndOffset = (SECONDS_IN_24H - secStart + secEnd) * 128; // Add 2
@@ -118,5 +118,5 @@ void getOffset(TIME *timeIntervals, TIME *startTime, uint32_t *dataStartOffset, 
 	hours = (SECONDS_IN_24H - secStart + secEnd) / 3600;
 	minutes = ((SECONDS_IN_24H - secStart + secEnd) - (3600 * hours)) / 60;
 	seconds = ((SECONDS_IN_24H - secStart + secEnd) - (3600 * hours) - (minutes * 60));
-	printf("End\t\t%02d:%02d:%02d\t%d\n", hours, minutes, seconds, *dataEndOffset);
+	//printf("End\t\t%02d:%02d:%02d\t%d\n", hours, minutes, seconds, *dataEndOffset);
 }

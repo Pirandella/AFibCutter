@@ -22,8 +22,6 @@ void *threadHandler(void *data){
 
 	createFileName(tData->conf->srcFile, dstFileAddr, timeIntervals);
 
-	printf("%s\n", dstFileAddr);
-
     FILE *srcFile = fopen(tData->conf->srcFile, "r");
 	FILE *dstFile = fopen(dstFileAddr, "w");
 
@@ -46,7 +44,6 @@ void *threadHandler(void *data){
 	fgets(buffer, 100, srcFile);
 	fgets(buffer, 100, srcFile);
 	time = getTime(buffer);
-	printf("File start time HH:%s\tMM:%s\tSS:%s\n", time->s_hours, time->s_minutes, time->s_seconds);
 
 	getOffset(timeIntervals, time, &dataStartOffset, &dataEndOffset, freq);
 	dataStartOffset -= tData->conf->offset;
@@ -60,10 +57,10 @@ void *threadHandler(void *data){
 		fprintf(dstFile, "%s", buffer);
 	}
 
-	printf("%s\t\t%d\n", buffer, dataStartOffset);
-
     printf("Thread with ID: %d finished work\n", tData->timeID);
 
+	srcFile = NULL;
+	dstFile = NULL;
     free(tData);
 	free(timeIntervals);
     free(time);
