@@ -11,10 +11,15 @@ void *threadHandler(void *data){
 	char dstFileAddr[500];
 	char buffer[100];
 
+	double elapsedTime = 0.0f;
+	time_t begin, end;
+
 	memset(buffer, 0, 100);
 	memset(dstFileAddr, 0, 500);
 
     printf("Thread with ID: %d is working\n", tData->timeID);
+
+	begin = clock();
 
     timeIntervals = getTimeIntervals(tData->conf, tData->timeID);
     printf("HH:%s\tMM:%s\tSS:%s\n", timeIntervals->s_hours, timeIntervals->s_minutes, timeIntervals->s_seconds);
@@ -57,7 +62,10 @@ void *threadHandler(void *data){
 		fprintf(dstFile, "%s", buffer);
 	}
 
-    printf("Thread with ID: %d finished work\n", tData->timeID);
+	end = clock();
+	elapsedTime = (double)(end - begin) / CLOCKS_PER_SEC;
+
+    printf("Thread with ID: %d finished work.\tTime: %f s.\n", tData->timeID, elapsedTime);
 
 	srcFile = NULL;
 	dstFile = NULL;

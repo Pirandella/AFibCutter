@@ -2,7 +2,7 @@
 #define _THREAD_H_
 
 #include <stdio.h>
-#include <unistd.h>
+#include <time.h>
 #include <pthread.h>
 #include <string.h>
 
