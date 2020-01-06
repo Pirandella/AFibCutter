@@ -53,13 +53,13 @@ void getArgs(CONF *conf, int argc, char **argv){
                         argCheck |= (1 << 4);
                         break;
                     case 5: // "-h" help
-						puts("\t\t\tAFibCutter");
-						puts("Arguments:\n\t-t - Time code formated in next way (start time code)HH:MM:SS/(End time code)HH:MM:SS(Space)HH:MM:SS/HH:MM:SS(Space) and so on");
-						puts("\t-s - Address of txt souce file that was exported from EDF/EDF(+) to ASCII using Polyman with TAB as separator and \'.\' as number separator");
-						puts("Optional arguments:\n\t-d - Address of result file (Not in use for now)");
-						puts("\t-o - Number data points that would be writen to file before and after specified time codes");
-						puts("\t-c - Selection of data channels that would be wrtitten in the result file (Not in use for now)");
-						puts("\t-h - Help)");
+                        puts("\t\t\tAFibCutter");
+                        puts("Arguments:\n\t-t - Time code formated in next way (start time code)HH:MM:SS/(End time code)HH:MM:SS(Space)HH:MM:SS/HH:MM:SS(Space) and so on");
+                        puts("\t-s - Address of txt souce file that was exported from EDF/EDF(+) to ASCII using Polyman with TAB as separator and \'.\' as number separator");
+                        puts("Optional arguments:\n\t-d - Address of result file (Not in use for now)");
+                        puts("\t-o - Number data points that would be writen to file before and after specified time codes");
+                        puts("\t-c - Selection of data channels that would be wrtitten in the result file (Not in use for now)");
+                        puts("\t-h - Help)");
                         exit(1);
                 }
             }
