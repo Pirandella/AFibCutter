@@ -10,15 +10,12 @@ void *threadHandler(void *data){
     uint32_t dataDifferenceOffset;
     char dstFileAddr[500];
     char buffer[100];
-
-    double elapsedTime = 0.0f;
-    time_t begin, end;
+    char buffer_0[100];
 
     memset(buffer, 0, 100);
     memset(dstFileAddr, 0, 500);
 
     printf("Thread with ID: %d is working\n", tData->timeID);
-    begin = clock();
 
     timeIntervals = getTimeIntervals(tData->conf, tData->timeID);
     printf("HH:%s\tMM:%s\tSS:%s\n", timeIntervals->s_hours, timeIntervals->s_minutes, timeIntervals->s_seconds);
@@ -49,21 +46,25 @@ void *threadHandler(void *data){
     time = getTime(buffer);
 
     getOffset(timeIntervals, time, &dataStartOffset, &dataEndOffset, freq);
-    dataStartOffset -= tData->conf->offset;
+
+    if(dataStartOffset != 0)dataStartOffset -= tData->conf->offset;
     dataEndOffset += tData->conf->offset;
     dataDifferenceOffset = DIFFERECE(dataStartOffset, dataEndOffset);
 
+    // printf("%d\n", dataStartOffset);
+    // printf("%d\n", dataEndOffset);
+
     // Skip to data start time
-    while(--dataStartOffset > 0) fgets(buffer, 100, srcFile);
-    while(dataDifferenceOffset-- != 0){
+    if(dataStartOffset != 0) while(--dataStartOffset > 0) fgets(buffer, 100, srcFile);
+    while(dataDifferenceOffset-- > 0){
         fgets(buffer, 100, srcFile);
-        fprintf(dstFile, "%s", buffer);
+        strncpy(buffer_0, &buffer[H_OFFSET], 89);
+        for(uint8_t i = 0; i < 6; i++) if(buffer_0[i] == 0x09) buffer_0[i] = ':';
+        fprintf(dstFile, "%s", buffer_0);
     }
+    // printf("%s\n", buffer_0);
 
-    end = clock();
-    elapsedTime = (double)(end - begin) / CLOCKS_PER_SEC;
-
-    printf("Thread with ID: %d finished work.\tTime: %f s.\n", tData->timeID, elapsedTime);
+    printf("Thread with ID: %d finished work.\n", tData->timeID);
 
     srcFile = NULL;
     dstFile = NULL;
