@@ -5,9 +5,9 @@ void *threadHandler(void *data){
     TIME *timeIntervals;
     TIME *time;
     uint8_t freq = 128;
-    uint32_t dataStartOffset;
-    uint32_t dataEndOffset;
-    uint32_t dataDifferenceOffset;
+    uint32_t dataStartOffset = 0;
+    uint32_t dataEndOffset = 0;
+    uint32_t dataDifferenceOffset = 0;
     char dstFileAddr[500];
     char buffer[100];
     char buffer_0[100];
@@ -47,22 +47,27 @@ void *threadHandler(void *data){
 
     getOffset(timeIntervals, time, &dataStartOffset, &dataEndOffset, freq);
 
-    if(dataStartOffset != 0)dataStartOffset -= tData->conf->offset;
-    dataEndOffset += tData->conf->offset;
+    if(dataStartOffset < tData->conf->offset && dataStartOffset != 0) dataStartOffset -= DIFFERECE(dataStartOffset, tData->conf->offset);
+    else if(dataStartOffset != 0)dataStartOffset -= tData->conf->offset;
+    
+    if(tData->conf->offset < (SECONDS_IN_24H * 128)) dataEndOffset += tData->conf->offset;
+    else dataEndOffset += DIFFERECE(dataEndOffset, tData->conf->offset);
+
     dataDifferenceOffset = DIFFERECE(dataStartOffset, dataEndOffset);
 
-    // printf("%d\n", dataStartOffset);
-    // printf("%d\n", dataEndOffset);
+    printf("%d\n", dataStartOffset);
+    printf("%d\n", dataEndOffset);
 
     // Skip to data start time
     if(dataStartOffset != 0) while(--dataStartOffset > 0) fgets(buffer, 100, srcFile);
+    printf("%s", buffer);
     while(dataDifferenceOffset-- > 0){
         fgets(buffer, 100, srcFile);
         strncpy(buffer_0, &buffer[H_OFFSET], 89);
         for(uint8_t i = 0; i < 6; i++) if(buffer_0[i] == 0x09) buffer_0[i] = ':';
         fprintf(dstFile, "%s", buffer_0);
     }
-    // printf("%s\n", buffer_0);
+    printf("%s", buffer_0);
 
     printf("Thread with ID: %d finished work.\n", tData->timeID);
 
