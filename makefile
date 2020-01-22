@@ -1,15 +1,15 @@
 CC := gcc
 TARGET := AFibCutter
-CFLAGS = -std=c99 -I $(IDIR) -pthread
+CFLAGS = -std=c99 -I $(IDIR) -pthread 
 
 ODIR := ./obj
 SDIR := ./src
 IDIR := ./inc
 
-_DEPS := argParser.h fileHandler.h thread.h
+_DEPS := argParser.h fileHandler.h thread.h QRS.h
 DEPS := $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ := main.o argParser.o fileHandler.o thread.o
+_OBJ := main.o argParser.o fileHandler.o thread.o QRS.o
 OBJ := $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)

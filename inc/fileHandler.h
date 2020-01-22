@@ -24,6 +24,18 @@ typedef struct{
     char e_seconds[3];
 }TIME;
 
+typedef struct{
+    int year;
+    int month;
+    int day;
+    int hours;
+    int minutes;
+    float seconds;
+    float ch0;
+    float ch1;
+    float ch2;
+}strData;
+
 TIME *getTimeIntervals(CONF *conf, uint8_t timeID);
 TIME *getTime(const char *buffer);
 void createFileName(const char *srcFile, char *dstFile, TIME *time);

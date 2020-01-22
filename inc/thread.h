@@ -8,6 +8,7 @@
 
 #include "argParser.h"
 #include "fileHandler.h"
+#include "QRS.h"
 
 #define MAX_THREAD  255
 
