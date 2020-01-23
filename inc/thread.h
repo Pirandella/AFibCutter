@@ -9,6 +9,7 @@
 #include "argParser.h"
 #include "fileHandler.h"
 #include "QRS.h"
+#include "hc_chen.h"
 
 #define MAX_THREAD  255
 
@@ -16,6 +17,8 @@ typedef struct{
     uint8_t timeID;
     CONF *conf;
 }threadData;
+
+pthread_mutex_t lock;
 
 void *threadHandler(void *data);
 

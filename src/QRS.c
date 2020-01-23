@@ -43,7 +43,7 @@ int square(int data){
 }
 
 int movingWindowIntegral(int data) {
-   static const int WINDOW_SIZE = SAMPLING_RATE * 0.3;
+   static const int WINDOW_SIZE = SAMPLING_RATE * 0.4;
    static int x[WINDOW_SIZE], ptr = 0;
    static long sum = 0;
    long ly;
@@ -54,7 +54,7 @@ int movingWindowIntegral(int data) {
    sum += data;
    x[ptr] = data;
    ly = sum >> 5;
-   uint32_t MAX_INTEGRAL = 4096;
+   uint32_t MAX_INTEGRAL = 4096; // 4096
    if(ly > MAX_INTEGRAL) y = MAX_INTEGRAL;
    else y = (int)ly;
 
@@ -74,7 +74,7 @@ SignalPoint panTompkins(int sample,float value,int bandpass,int square,int integ
     static int rr1[8] = {0}, rr2[8] = {0}, rravg1, rravg2, rrlow = 0, rrhigh = 0, rrmiss = 0;
 
     SignalPoint result;
-    result.index = -1;
+    result.index = 0;
 
     peak_buffer[sample % SEARCH_BACK_TIME].index = sample;
     peak_buffer[sample % SEARCH_BACK_TIME].value = value;

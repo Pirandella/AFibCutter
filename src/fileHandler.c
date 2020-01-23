@@ -76,12 +76,12 @@ TIME *getTime(const char *buffer){
     return time;
 }
 
-void createFileName(const char *srcFile, char *dstFile, TIME *time){
+void createFileName(const char *srcFile, char *dstFile, char *qrsFile, TIME *time){
     uint8_t hours;
     uint8_t minutes;
     uint8_t seconds;
     uint32_t secStart, secEnd, secDiff;
-    char tmp[23];
+    char tmp[27];
 
     secStart = (atoi(time->s_hours) * 3600) + (atoi(time->s_minutes) * 60) + (atoi(time->s_seconds));
     secEnd = (atoi(time->e_hours) * 3600) + (atoi(time->e_minutes) * 60) + (atoi(time->e_seconds));
@@ -91,9 +91,12 @@ void createFileName(const char *srcFile, char *dstFile, TIME *time){
     minutes = (secDiff - (3600 * hours)) / 60;
     seconds = (secDiff - (3600 * hours) - (minutes * 60));
 
-    sprintf(tmp, "_%s:%s:%s_%02d:%02d:%02d.txt", time->s_hours, time->s_minutes, time->s_seconds, hours, minutes, seconds);
+    sprintf(tmp, "_ECG_%s:%s:%s_%02d:%02d:%02d.txt", time->s_hours, time->s_minutes, time->s_seconds, hours, minutes, seconds);
     strncpy(dstFile, srcFile, (strrchr(srcFile, '.') - srcFile));
     strcat(dstFile, tmp);
+    sprintf(tmp, "_QRS_%s:%s:%s_%02d:%02d:%02d.txt", time->s_hours, time->s_minutes, time->s_seconds, hours, minutes, seconds);
+    strncpy(qrsFile, srcFile, (strrchr(srcFile, '.') - srcFile));
+    strcat(qrsFile, tmp);
 }
 
 void getOffset(TIME *timeIntervals, TIME *startTime, uint32_t *dataStartOffset, uint32_t *dataEndOffset, uint16_t freq){
@@ -106,10 +109,10 @@ void getOffset(TIME *timeIntervals, TIME *startTime, uint32_t *dataStartOffset, 
 
     secEnd = (atoi(timeIntervals->s_hours) * 3600) + (atoi(timeIntervals->s_minutes) * 60) + (atoi(timeIntervals->s_seconds));
 
-    if(atoi(timeIntervals->s_hours) < 19) *dataStartOffset = (SECONDS_IN_24H - secStart + secEnd) * freq;
+    if(atoi(timeIntervals->s_hours) < 9) *dataStartOffset = (SECONDS_IN_24H - secStart + secEnd) * freq;
     else *dataStartOffset = (SECONDS_IN_24H - secStart + (secEnd - SECONDS_IN_24H)) * freq;
 
     secEnd = (atoi(timeIntervals->e_hours) * 3600) + (atoi(timeIntervals->e_minutes) * 60) + (atoi(timeIntervals->e_seconds));
-    if(atoi(timeIntervals->e_hours) < 19) *dataEndOffset = (SECONDS_IN_24H - secStart + secEnd) * freq;
+    if(atoi(timeIntervals->e_hours) < 9) *dataEndOffset = (SECONDS_IN_24H - secStart + secEnd) * freq;
     else *dataEndOffset = (SECONDS_IN_24H - secStart + (secEnd - SECONDS_IN_24H)) * freq;
 }

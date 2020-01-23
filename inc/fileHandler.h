@@ -38,7 +38,7 @@ typedef struct{
 
 TIME *getTimeIntervals(CONF *conf, uint8_t timeID);
 TIME *getTime(const char *buffer);
-void createFileName(const char *srcFile, char *dstFile, TIME *time);
+void createFileName(const char *srcFile, char *dstFile, char *qrsFile, TIME *time);
 void getOffset(TIME *timeIntervals, TIME *startTime, uint32_t *dataStartOffset, uint32_t *dataEndOffset, uint16_t freq);
 
 #endif // _FILE_HANDLER_H_

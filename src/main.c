@@ -23,6 +23,11 @@ int main(int argc, char **argv){
 
     begin = clock();
 
+    if(pthread_mutex_init(&lock, NULL) != 0){
+        printf("Mutex init failed\n");
+        return 1;
+    }
+
     for(uint8_t i = 0; i < conf->timeCodeCount; i++){
         threadData *data = malloc(sizeof(threadData));
         data->conf = conf;
@@ -34,6 +39,7 @@ int main(int argc, char **argv){
     for(uint8_t i = 0; i < conf->timeCodeCount; i++){
         pthread_join(threads[i], NULL);
     }
+    pthread_mutex_destroy(&lock);
 
     end = clock();
     elapsedTime = (double)(end - begin) / CLOCKS_PER_SEC;

@@ -27,5 +27,4 @@ int derivative(int data);
 int square(int data);
 int movingWindowIntegral(int data);
 SignalPoint panTompkins(int sample,float value,int bandpass,int square,int integral);
-
 #endif  // _QRS_H_
